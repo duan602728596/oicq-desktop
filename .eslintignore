@@ -1,0 +1,9 @@
+# node
+node_modules
+
+.sweet
+./app
+./build
+lib
+dist
+www

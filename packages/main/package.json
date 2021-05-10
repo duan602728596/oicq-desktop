@@ -1,0 +1,20 @@
+{
+  "name": "@oicq-desktop/main",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "npm run clean && cross-env NODE_ENV=development WATCH=1 gulp",
+    "dev": "npm run clean && cross-env NODE_ENV=development gulp",
+    "build": "npm run clean && cross-env NODE_ENV=production gulp",
+    "clean": "rimraf ./lib"
+  },
+  "dependencies": {
+    "@electron/remote": "^1.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-terser": "^2.0.1",
+    "gulp-typescript": "^6.0.0-alpha.1"
+  }
+}
