@@ -1,6 +1,5 @@
 import * as process from 'process';
 import * as path from 'path';
-import * as url from 'url';
 import { app, BrowserWindow, Menu } from 'electron';
 import { initialize } from '@electron/remote/main';
 import { isDevelopment } from './utils';
@@ -31,13 +30,11 @@ function createWindow(): void {
     win.webContents.openDevTools();
   }
 
-  win.loadURL(url.format({
-    pathname: isDevelopment
-      ? path.join(__dirname, '../../qqtools/dist/index.html')
-      : path.join(__dirname, '../../dist/index.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
+  const indexHtml: string = isDevelopment
+    ? path.join(__dirname, '../../oicq-desktop/dist/index.html')
+    : path.join(__dirname, '../../dist/index.html');
+
+  win.loadURL(`file://${ indexHtml }`);
 
   // 去掉顶层菜单
   Menu.setApplicationMenu(null);

@@ -1,6 +1,5 @@
 import * as process from 'process';
 import * as path from 'path';
-import AntdDayjsWebpackPlugin from 'antd-dayjs-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const isDev: boolean = process.env.NODE_ENV === 'development';
@@ -83,7 +82,7 @@ export default function(info: object): { [key: string]: any } {
     css: {
       include: /node_modules[\\/](_?antd)/
     },
-    plugins: [new AntdDayjsWebpackPlugin()].concat(analyzer ? [new BundleAnalyzerPlugin()] : [])
+    plugins: analyzer ? [new BundleAnalyzerPlugin()] : []
   };
 
   return config;

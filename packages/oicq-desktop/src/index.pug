@@ -1,0 +1,15 @@
+- var imports = require('./imports');
+
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='renderer' content='webkit')
+    title oicq
+
+  body
+    div.app#app
+      include ./components/loading/loading.pug
+
+    if htmlWebpackPlugin.options.mode === 'development'
+      script(src=imports.dll)
