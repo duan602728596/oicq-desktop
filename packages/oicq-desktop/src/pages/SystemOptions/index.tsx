@@ -27,7 +27,7 @@ function Index(props: {}): ReactElement {
       query: 'system_options'
     }));
 
-    setFieldsValue(data.result.value);
+    setFieldsValue(data?.result?.value);
   }
 
   // 保存
@@ -59,7 +59,13 @@ function Index(props: {}): ReactElement {
   }, []);
 
   return (
-    <Form className={ style.content } form={ form } initialValues={{ logLevel: 'info' }} onFinish={ handleFormSubmit }>
+    <Form className={ style.content }
+      form={ form }
+      initialValues={{ logLevel: 'info' }}
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 18 }}
+      onFinish={ handleFormSubmit }
+    >
       <Form.Item label="数据存储文件夹">
         <div className={ style.flexLayout }>
           <div className={ style.flexAuto }>

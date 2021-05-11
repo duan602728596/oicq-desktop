@@ -20,6 +20,13 @@ const dbConfig: DbConfig = {
       name: 'system_options',
       key: 'name',
       data: ['value']
+    },
+
+    // 插件
+    {
+      name: 'plugins',
+      key: 'id',
+      data: ['path', 'name', 'esm']
     }
   ]
 };
