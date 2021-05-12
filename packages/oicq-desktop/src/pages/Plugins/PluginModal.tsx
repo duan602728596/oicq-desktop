@@ -42,6 +42,13 @@ function PluginModal(props: PluginModalProps): ReactElement {
         <Form.Item name="esm" label="esm方式加载插件" valuePropName="checked" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
           <Switch />
         </Form.Item>
+        {
+          item && (
+            <Form.Item name="esm" label="开启插件" valuePropName="checked" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+              <Switch />
+            </Form.Item>
+          )
+        }
       </Form>
     </Modal>
   );
