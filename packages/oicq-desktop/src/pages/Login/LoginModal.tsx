@@ -5,13 +5,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSelector, createStructuredSelector, Selector } from 'reselect';
 import { Modal, Form, Input, Radio, Transfer, Checkbox, FormInstance } from 'antd';
 import type { TransferItem } from 'antd/es/transfer';
-import style from './loginModal.sass';
 import { logLevel } from '../SystemOptions';
 import { queryPluginsList, PluginsInitialState } from '../Plugins/reducers/reduces';
 import dbConfig from '../../utils/idb/dbConfig';
 import type { LogLevel, PluginItem } from '../../types';
 
 const loginLogLevel: Array<'默认' | LogLevel> = ['默认', ...logLevel];
+// 登陆设备 1:安卓手机(默认) 2:aPad 3:安卓手表 4:MacOS 5:iPad
+const platformOptions: Array<{ value: number; label: string }> = [
+  { value: 1, label: '安卓手机' },
+  { value: 2, label: '安卓平板' },
+  { value: 3, label: '安卓手表' },
+  { value: 4, label: 'MacOS' },
+  { value: 5, label: 'iPad' }
+];
 
 interface LoginModalProps {
   visible: boolean; // 弹出层的显示隐藏
@@ -68,25 +75,27 @@ function LoginModal(props: LoginModalProps): ReactElement {
   return (
     <Modal title="账号登陆"
       visible={ visible }
-      width={ 800 }
-      bodyStyle={{ padding: '16px' }}
+      width={ 600 }
+      bodyStyle={{ height: '400px', overflow: 'auto' }}
       centered={ true }
       maskClosable={ false }
       destroyOnClose={ true }
       afterClose={ resetFields }
       onCancel={ onCancel }
     >
-      <Form className={ style.form }
-        form={ form }
-        initialValues={{ logLevel: '默认', plugins: defaultTransferPluginsList }}
-        labelCol={{ span: 3 }}
-        wrapperCol={{ span: 21 }}
+      <Form form={ form }
+        initialValues={{ logLevel: '默认', plugins: defaultTransferPluginsList, platform: 2 }}
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 19 }}
       >
         <Form.Item name="uin" label="账号" rules={ [{ required: true, message: '请填写账号', whitespace: true }] }>
           <Input />
         </Form.Item>
         <Form.Item name="password" label="密码" rules={ [{ required: true, message: '请输入密码', whitespace: true }] }>
           <Input.Password />
+        </Form.Item>
+        <Form.Item name="platform" label="登陆设备">
+          <Radio.Group options={ platformOptions } optionType="button" buttonStyle="solid" />
         </Form.Item>
         <Form.Item name="remember" label="记住账号信息" valuePropName="checked">
           <Checkbox />
@@ -95,8 +104,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
           <Radio.Group options={ loginLogLevel } />
         </Form.Item>
         <Form.Item name="plugins" label="加载插件" valuePropName="targetKeys">
-          <Transfer className={ style.transfer }
-            titles={ ['未加载插件', '已加载插件'] }
+          <Transfer titles={ ['未加载插件', '已加载插件'] }
             dataSource={ transferPluginsList }
             render={ (record: TransferItem): string => record.title! }
           />
