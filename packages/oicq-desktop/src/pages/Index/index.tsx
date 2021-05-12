@@ -15,7 +15,9 @@ function Index(props: {}): ReactElement {
   return (
     <nav className={ style.content }>
       <Space className={ style.space } size={ 24 } direction="vertical">
-        <Button type="primary" block={ true }>账号登陆</Button>
+        <Link to="Login">
+          <Button type="primary" block={ true }>账号登陆</Button>
+        </Link>
         <Link to="Plugins">
           <Button block={ true }>插件加载</Button>
         </Link>
