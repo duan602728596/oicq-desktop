@@ -16,7 +16,7 @@ const logLevel: Array<LogLevel> = ['trace', 'debug', 'info', 'warn', 'error', 'f
 function Index(props: {}): ReactElement {
   const dispatch: Dispatch = useDispatch();
   const [form]: [FormInstance<SystemOptions>] = Form.useForm();
-  const { setFieldsValue }: FormInstance = form;
+  const { setFieldsValue }: FormInstance<SystemOptions> = form;
 
   // 获取初始值
   async function getFormValue(): Promise<void> {
@@ -66,7 +66,7 @@ function Index(props: {}): ReactElement {
       wrapperCol={{ span: 18 }}
       onFinish={ handleFormSubmit }
     >
-      <Form.Item label="数据存储文件夹">
+      <Form.Item label="数据存储文件夹" required={ true }>
         <div className={ style.flexLayout }>
           <div className={ style.flexAuto }>
             <Form.Item name="oicqDataDir"
