@@ -27,6 +27,13 @@ const dbConfig: DbConfig = {
       name: 'plugins',
       key: 'id',
       data: ['path', 'name', 'esm']
+    },
+
+    // 本地记住的账号
+    {
+      name: 'account',
+      key: 'uin',
+      data: ['password']
     }
   ]
 };

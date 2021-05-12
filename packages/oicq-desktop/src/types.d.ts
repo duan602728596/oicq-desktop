@@ -1,4 +1,6 @@
-type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'mark' | 'off';
+import type { Client } from 'oicq';
+
+export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'mark' | 'off';
 
 export interface SystemOptions {
   oicqDataDir: string;
@@ -11,4 +13,10 @@ export interface PluginItem {
   path: string;
   esm?: boolean;
   use?: boolean;
+}
+
+export interface LoginItem {
+  uin: number;
+  client: Client;
+  logLevel: LogLevel;
 }

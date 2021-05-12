@@ -10,7 +10,7 @@ import style from './index.sass';
 import { saveSystemOptionsValue, getSystemOptionsValue } from './reducers/reducers';
 import type { SystemOptions, LogLevel } from '../../types';
 
-const logLevel: Array<LogLevel> = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'mark', 'off'];
+export const logLevel: Array<LogLevel> = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'mark', 'off'];
 
 /* 系统配置 */
 function Index(props: {}): ReactElement {
