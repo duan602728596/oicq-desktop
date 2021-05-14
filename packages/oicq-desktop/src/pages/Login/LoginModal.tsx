@@ -5,10 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSelector, createStructuredSelector, Selector } from 'reselect';
 import { Modal, Form, Input, Radio, Transfer, Checkbox, FormInstance } from 'antd';
 import type { TransferItem } from 'antd/es/transfer';
+import { Onion } from '@bbkkbkk/q';
 import { logLevel } from '../SystemOptions';
 import { queryPluginsList, PluginsInitialState } from '../Plugins/reducers/reduces';
+import { getSystemOptionsValue } from './reducers/reducers';
 import dbConfig from '../../utils/idb/dbConfig';
 import type { LogLevel, PluginItem } from '../../types';
+import type { OnCancelFunc, FormValueStore } from './types';
 
 const loginLogLevel: Array<'默认' | LogLevel> = ['默认', ...logLevel];
 // 登陆设备 1:安卓手机(默认) 2:aPad 3:安卓手表 4:MacOS 5:iPad
@@ -22,7 +25,7 @@ const platformOptions: Array<{ value: number; label: string }> = [
 
 interface LoginModalProps {
   visible: boolean; // 弹出层的显示隐藏
-  onCancel: (event: MouseEvent<HTMLButtonElement>) => void;
+  onCancel: OnCancelFunc;
 }
 
 /* redux selector */
@@ -41,8 +44,8 @@ function LoginModal(props: LoginModalProps): ReactElement {
   const { visible, onCancel }: LoginModalProps = props;
   const { pluginsList }: RSelector = useSelector(selector);
   const dispatch: Dispatch = useDispatch();
-  const [form]: [FormInstance] = Form.useForm();
-  const { resetFields }: FormInstance = form;
+  const [form]: [FormInstance<FormValueStore>] = Form.useForm();
+  const { validateFields, resetFields }: FormInstance<FormValueStore> = form;
 
   // 插件列表
   const [transferPluginsList, defaultTransferPluginsList]: [Array<TransferItem>, Array<string>]
@@ -64,11 +67,36 @@ function LoginModal(props: LoginModalProps): ReactElement {
       return [l, r];
     }, [pluginsList]);
 
+  // 点击登陆
+  async function handleLoginClick(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    let formValue: FormValueStore;
+
+    try {
+      formValue = await validateFields();
+    } catch {
+      return;
+    }
+
+    const onion: Onion = new Onion();
+
+    onion.run({
+      formValue,
+      onCancel,
+      pluginsList
+    });
+  }
+
   useEffect(function(): void {
     dispatch(queryPluginsList({
       query: {
         indexName: dbConfig.objectStore[1].data[0]
       }
+    }));
+  }, []);
+
+  useEffect(function(): void {
+    dispatch(getSystemOptionsValue({
+      query: 'system_options'
     }));
   }, []);
 
@@ -81,6 +109,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
       maskClosable={ false }
       destroyOnClose={ true }
       afterClose={ resetFields }
+      onOk={ handleLoginClick }
       onCancel={ onCancel }
     >
       <Form form={ form }
