@@ -1,3 +1,4 @@
+import './log4js';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';

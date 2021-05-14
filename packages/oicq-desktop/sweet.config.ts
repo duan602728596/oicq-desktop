@@ -65,6 +65,9 @@ export default function(info: object): { [key: string]: any } {
       '@electron/remote',
       '@sweet-milktea/utils',
       'electron',
+      'log4js',
+      'log4js/lib/appenders/stdout',
+      'log4js/lib/appenders/console',
       'oicq'
     ]),
     js: {

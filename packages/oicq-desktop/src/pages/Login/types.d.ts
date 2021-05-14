@@ -1,4 +1,5 @@
-import type { MouseEvent } from 'react';
+import type { Client } from 'oicq';
+import type { Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import type { LogLevel, PluginItem, SystemOptions } from '../../types';
 
 // reducer
@@ -21,7 +22,7 @@ export interface FormValueStore {
 // 格式化后的数据
 export interface LoginFormValue extends Omit<FormValueStore, 'plugins'> {
   uin: number;
-  logLevel: '默认' | LogLevel;
+  logLevel: LogLevel;
 }
 
 export interface LoginContext {
@@ -29,8 +30,12 @@ export interface LoginContext {
   onCancel: OnCancelFunc;
   pluginsList: Array<PluginItem>;
   systemOptions: SystemOptions | undefined;
+  setLoading: D<S<boolean>>; // 账号登陆时的loading
 
   // 处理后的值
   loginFormValue: LoginFormValue;
   usePluginsList: Array<PluginItem>;
+
+  // 机器人
+  client: Client;
 }

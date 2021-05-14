@@ -1,4 +1,4 @@
-import { useEffect, useMemo, ReactElement, MouseEvent } from 'react';
+import { useState, useEffect, useMemo, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import * as PropTypes from 'prop-types';
 import type { Dispatch } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ import { queryPluginsList, PluginsInitialState } from '../Plugins/reducers/reduc
 import { getSystemOptionsValue, LoginInitialState } from './reducers/reducers';
 import dbConfig from '../../utils/idb/dbConfig';
 import formValueMiddleware from './loginMiddleware/formValue';
+import loginMiddleware from './loginMiddleware/login';
 import type { LogLevel, PluginItem, SystemOptions } from '../../types';
 import type { OnCancelFunc, FormValueStore } from './types';
 
@@ -51,6 +52,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
   const { visible, onCancel }: LoginModalProps = props;
   const { pluginsList, systemOptions }: RSelector = useSelector(selector);
   const dispatch: Dispatch = useDispatch();
+  const [loading, setLoading]: [boolean, D<S<boolean>>] = useState(false); // 登陆后的loading
   const [form]: [FormInstance<FormValueStore>] = Form.useForm();
   const { validateFields, resetFields }: FormInstance<FormValueStore> = form;
 
@@ -87,11 +89,13 @@ function LoginModal(props: LoginModalProps): ReactElement {
     const onion: Onion = new Onion();
 
     onion.use(formValueMiddleware);
+    onion.use(loginMiddleware);
     onion.run({
       formValue,
       onCancel,
       pluginsList,
-      systemOptions
+      systemOptions,
+      setLoading
     });
   }
 
@@ -117,6 +121,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
       centered={ true }
       maskClosable={ false }
       destroyOnClose={ true }
+      confirmLoading={ loading }
       afterClose={ resetFields }
       onOk={ handleLoginClick }
       onCancel={ onCancel }
