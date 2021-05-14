@@ -19,14 +19,18 @@ export interface FormValueStore {
 }
 
 // 格式化后的数据
-export interface LoginFormValue extends FormValueStore {
+export interface LoginFormValue extends Omit<FormValueStore, 'plugins'> {
   uin: number;
   logLevel: '默认' | LogLevel;
 }
 
 export interface LoginContext {
   formValue: FormValueStore;
-  loginFormValue: LoginFormValue;
   onCancel: OnCancelFunc;
   pluginsList: Array<PluginItem>;
+  systemOptions: SystemOptions | undefined;
+
+  // 处理后的值
+  loginFormValue: LoginFormValue;
+  usePluginsList: Array<PluginItem>;
 }

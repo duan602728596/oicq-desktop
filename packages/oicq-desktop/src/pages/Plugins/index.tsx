@@ -16,7 +16,7 @@ const selector: Selector<any, PluginsInitialState> = createStructuredSelector({
   // 插件列表
   pluginsList: createSelector(
     ({ plugins }: { plugins: PluginsInitialState }): Array<PluginItem> => plugins.pluginsList,
-    (data: Array<PluginItem>): Array<PluginItem> => (data)
+    (data: Array<PluginItem>): Array<PluginItem> => data
   )
 });
 

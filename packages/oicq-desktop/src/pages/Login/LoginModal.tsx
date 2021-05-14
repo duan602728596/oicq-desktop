@@ -8,9 +8,10 @@ import type { TransferItem } from 'antd/es/transfer';
 import { Onion } from '@bbkkbkk/q';
 import { logLevel } from '../SystemOptions';
 import { queryPluginsList, PluginsInitialState } from '../Plugins/reducers/reduces';
-import { getSystemOptionsValue } from './reducers/reducers';
+import { getSystemOptionsValue, LoginInitialState } from './reducers/reducers';
 import dbConfig from '../../utils/idb/dbConfig';
-import type { LogLevel, PluginItem } from '../../types';
+import formValueMiddleware from './loginMiddleware/formValue';
+import type { LogLevel, PluginItem, SystemOptions } from '../../types';
 import type { OnCancelFunc, FormValueStore } from './types';
 
 const loginLogLevel: Array<'默认' | LogLevel> = ['默认', ...logLevel];
@@ -29,20 +30,26 @@ interface LoginModalProps {
 }
 
 /* redux selector */
-type RSelector = PluginsInitialState;
+type RSelector = PluginsInitialState & Pick<LoginInitialState, 'systemOptions'>;
 
 const selector: Selector<any, RSelector> = createStructuredSelector({
   // 插件列表
   pluginsList: createSelector(
     ({ plugins }: { plugins: PluginsInitialState }): Array<PluginItem> => plugins.pluginsList,
-    (data: Array<PluginItem>): Array<PluginItem> => (data)
+    (data: Array<PluginItem>): Array<PluginItem> => data
+  ),
+
+  // 系统配置
+  systemOptions: createSelector(
+    ({ login }: { login: LoginInitialState }): SystemOptions | undefined => login.systemOptions,
+    (data: SystemOptions | undefined): SystemOptions | undefined => data
   )
 });
 
 /* 账号登陆 */
 function LoginModal(props: LoginModalProps): ReactElement {
   const { visible, onCancel }: LoginModalProps = props;
-  const { pluginsList }: RSelector = useSelector(selector);
+  const { pluginsList, systemOptions }: RSelector = useSelector(selector);
   const dispatch: Dispatch = useDispatch();
   const [form]: [FormInstance<FormValueStore>] = Form.useForm();
   const { validateFields, resetFields }: FormInstance<FormValueStore> = form;
@@ -79,10 +86,12 @@ function LoginModal(props: LoginModalProps): ReactElement {
 
     const onion: Onion = new Onion();
 
+    onion.use(formValueMiddleware);
     onion.run({
       formValue,
       onCancel,
-      pluginsList
+      pluginsList,
+      systemOptions
     });
   }
 
