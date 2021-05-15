@@ -1,1 +1,1 @@
-export default '@oicq-desktop/test-plugin';
+module.exports = '@oicq-desktop/test-plugin';

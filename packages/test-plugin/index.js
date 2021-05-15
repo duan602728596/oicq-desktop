@@ -1,15 +1,17 @@
-import name from './name.js';
+const md5 = require('md5');
+const name = require('./name.js');
 
 const title = `${ name }：`;
 
-export function activate(bot) {
-  console.log(title, '插件加载。');
-}
+exports.activate = function activate(bot) {
+  console.info(title, '插件加载。');
+  console.warn(title, `模块加载 - ${ md5('message') }`);
+};
 
-export function deactivate(bot) {
-  console.log(title, '插件卸载。');
-}
+exports.deactivate = function deactivate(bot) {
+  console.info(title, '插件卸载。');
+};
 
-export function destructor() {
-  console.log(title, '其他操作。');
-}
+exports.destructor = function destructor() {
+  console.info(title, '其他操作。');
+};

@@ -6,13 +6,13 @@ import type { LoginContext } from '../types';
 /* 登陆完成 */
 async function successMiddleware(ctx: LoginContext, next: Function): Promise<void> {
   const { dispatch }: Store = store;
-  const { formValue, loginFormValue, client, usePluginsList, setLoading, onCancel }: LoginContext = ctx;
+  const { formValue, loginFormValue, client, clientPlugins, setLoading, onCancel }: LoginContext = ctx;
 
   dispatch(setLoginList({
     uin: loginFormValue.uin,
     client,
     logLevel: loginFormValue.logLevel,
-    plugins: usePluginsList
+    plugins: clientPlugins
   }));
 
   // 记住账号
