@@ -13,11 +13,13 @@ async function pluginsMiddleware(ctx: LoginContext, next: Function): Promise<voi
       ? await importESM(`${ plugin.path }?t=${ new Date().getTime() }`)
       : await requireModuleWithoutCache(plugin.path, true);
 
-    try {
-      await module.activate(client);
-      clientPlugins.push(module);
-    } catch (err) {
-      console.error(plugin.name, err);
+    if (typeof module.activate === 'function') {
+      try {
+        await module.activate(client);
+        clientPlugins.push(module);
+      } catch (err) {
+        console.error(plugin.name, err);
+      }
     }
   }
 

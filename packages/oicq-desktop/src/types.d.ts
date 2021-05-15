@@ -19,8 +19,8 @@ export interface PluginItem {
 
 // 登陆成功后挂载的实例
 export interface PluginModule {
-  activate(bot: Client): Promise<void>;
-  deactivate(bot: Client): Promise<void>;
+  activate(bot: Client | Draft<Client>): Promise<void>;
+  deactivate(bot: Client | Draft<Client>): Promise<void>;
   destructor?(): Promise<void>;
 }
 

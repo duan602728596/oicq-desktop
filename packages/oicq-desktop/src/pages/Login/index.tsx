@@ -1,3 +1,4 @@
+import type { Client } from 'oicq';
 import { useState, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import type { Dispatch } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,7 +29,25 @@ function Index(props: {}): ReactElement {
   const [visible, setVisible]: [boolean, D<S<boolean>>] = useState(false);
 
   // 账号下线
-  function handleLogoutClick(record: LoginItem, event: MouseEvent<HTMLAnchorElement>): void {
+  async function handleLogoutClick(record: LoginItem, event: MouseEvent<HTMLAnchorElement>): Promise<void> {
+    for (const plugin of record.plugins) {
+      if (typeof plugin.deactivate === 'function') {
+        try {
+          await plugin.deactivate(record.client);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      if (typeof plugin.destructor === 'function') {
+        try {
+          await plugin.destructor();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+
     dispatch(setLogout(record));
   }
 
@@ -47,7 +66,7 @@ function Index(props: {}): ReactElement {
       render: (value: undefined, record: LoginItem, index: number): ReactElement => (
         <Button type="primary"
           danger={ true }
-          onClick={ (event: MouseEvent<HTMLAnchorElement>): void => handleLogoutClick(record, event) }
+          onClick={ (event: MouseEvent<HTMLAnchorElement>): Promise<void> => handleLogoutClick(record, event) }
         >
           下线
         </Button>
