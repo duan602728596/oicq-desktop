@@ -48,6 +48,7 @@ function Index(props: {}): ReactElement {
       }
     }
 
+    await record.client.logout();
     dispatch(setLogout(record));
   }
 
