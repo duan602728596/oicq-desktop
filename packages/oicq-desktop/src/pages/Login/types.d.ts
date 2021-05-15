@@ -1,6 +1,7 @@
 import type { Client } from 'oicq';
+import type { Draft } from 'immer';
 import type { Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
-import type { LoginItem, LogLevel, PluginItem, PluginModule, SystemOptions } from '../../types';
+import type { LogLevel, PluginItem, PluginModule, SystemOptions } from '../../types';
 
 // reducer
 export interface QuerySystemOptionsResult {
@@ -8,8 +9,10 @@ export interface QuerySystemOptionsResult {
   result: { name: 'system_options'; value: SystemOptions };
 }
 
+// 关闭登陆窗口的方法
 export type OnCancelFunc = (event: MouseEvent<HTMLButtonElement>) => void;
 
+// 表单的值
 export interface FormValueStore {
   uin: string;
   password: string;
@@ -19,7 +22,7 @@ export interface FormValueStore {
   plugins: Array<string>;
 }
 
-// 格式化后的数据
+// 格式化后的表单的值
 export interface LoginFormValue extends Omit<FormValueStore, 'plugins'> {
   uin: number;
   logLevel: LogLevel;
@@ -30,6 +33,7 @@ interface BotHook {
   destroy?(): void;
 }
 
+// ctx挂载的对象
 export interface LoginContext {
   loginList: Array<LoginItem>;
   formValue: FormValueStore;
@@ -48,7 +52,16 @@ export interface LoginContext {
   clientPlugins: Array<PluginModule>;
 }
 
+// 常用账号
 export interface AccountItem {
   uin: string;
   password: string;
+}
+
+// 已登陆的账号
+export interface LoginItem {
+  uin: number;
+  client: Draft<Client>;
+  logLevel: LogLevel;
+  plugins: Array<PluginModule>;
 }

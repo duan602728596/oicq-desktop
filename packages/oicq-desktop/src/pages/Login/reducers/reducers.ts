@@ -1,8 +1,8 @@
 import { createSlice, Slice, SliceCaseReducers, PayloadAction, CaseReducerActions, ActionCreator } from '@reduxjs/toolkit';
 import { findIndex } from 'lodash-es';
 import dbRedux, { systemOptionsObjectStoreName, accountObjectStoreName } from '../../../utils/idb/dbRedux';
-import type { LoginItem, SystemOptions } from '../../../types';
-import type { QuerySystemOptionsResult, AccountItem } from '../types';
+import type { SystemOptions } from '../../../types';
+import type { QuerySystemOptionsResult, AccountItem, LoginItem } from '../types';
 
 export interface LoginInitialState {
   loginList: Array<LoginItem>;

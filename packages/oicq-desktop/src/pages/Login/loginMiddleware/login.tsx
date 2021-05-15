@@ -41,7 +41,7 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
       const [visible, setVisible]: [boolean, D<S<boolean>>] = useState(true);
       const [ticket, setTicket]: [string, D<S<string>>] = useState(''); // 滑动验证码
 
-      // 打开浏览器并监听事件
+      // 打开浏览器并监听获取到的ticket
       async function openSliderPage(): Promise<void> {
         if (browser !== null) return;
 
@@ -215,6 +215,7 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
     setLoading(false);
   });
 
+  // 添加hook方法供外部调用
   botHook.destroy = function(): void {
     bot.logout();
   };

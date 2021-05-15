@@ -8,6 +8,7 @@ async function successMiddleware(ctx: LoginContext, next: Function): Promise<voi
   const { dispatch }: Store = store;
   const { formValue, loginFormValue, client, clientPlugins, setLoading, onCancel }: LoginContext = ctx;
 
+  // 登陆成功
   dispatch(setLoginList({
     uin: loginFormValue.uin,
     client,

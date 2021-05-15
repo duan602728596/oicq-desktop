@@ -15,8 +15,8 @@ import formValueMiddleware from './loginMiddleware/formValue';
 import loginMiddleware from './loginMiddleware/login';
 import pluginsMiddleware from './loginMiddleware/plugins';
 import successMiddleware from './loginMiddleware/success';
-import type { LogLevel, PluginItem, SystemOptions, LoginItem } from '../../types';
-import type { OnCancelFunc, FormValueStore, BotHook, AccountItem } from './types';
+import type { LogLevel, PluginItem, SystemOptions } from '../../types';
+import type { OnCancelFunc, FormValueStore, BotHook, AccountItem, LoginItem } from './types';
 
 const loginLogLevel: Array<'默认' | LogLevel> = ['默认', ...logLevel];
 // 登陆设备 1:安卓手机(默认) 2:aPad 3:安卓手表 4:MacOS 5:iPad
@@ -34,7 +34,7 @@ interface LoginModalProps {
   onCancel: OnCancelFunc;
 }
 
-const botHook: BotHook = {};
+const botHook: BotHook = {}; // 挂载方法，在外部也能获取到bot
 
 /* redux selector */
 type RSelector = PluginsInitialState & Pick<LoginInitialState, 'systemOptions' | 'accountList'>;
@@ -88,7 +88,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
       return [l, r];
     }, [pluginsList]);
 
-  // 点击删除账号
+  // 点击删除已经记住的账号
   function handleDeleteAccountClick(uin: string, event: MouseEvent<HTMLButtonElement>): void {
     event.stopPropagation();
     dispatch(deleteAccount({
@@ -132,6 +132,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
     onion.use(loginMiddleware);
     onion.use(pluginsMiddleware);
     onion.use(successMiddleware);
+
     onion.run({
       loginList,
       formValue,
@@ -143,14 +144,14 @@ function LoginModal(props: LoginModalProps): ReactElement {
     });
   }
 
-  // 关闭时需要销毁登陆的bot
+  // 关闭时需要销毁正在登陆的bot
   function handleCloseClick(event: MouseEvent<HTMLButtonElement>): void {
     botHook.destroy?.();
     onCancel(event);
     setLoading(false);
   }
 
-  // 过滤账号
+  // 搜索账号过滤
   function filterOption(inputValue: string | undefined, option: { label: ReactElement; value: string }): boolean {
     if (!inputValue || /^\s*$/.test(inputValue)) {
       return true;

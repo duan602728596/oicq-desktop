@@ -1,4 +1,3 @@
-import type { Client } from 'oicq';
 import { useState, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import type { Dispatch } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,7 +8,7 @@ import type { ColumnsType } from 'antd/es/table';
 import style from './index.sass';
 import LoginModal from './LoginModal';
 import { setLogout, LoginInitialState } from './reducers/reducers';
-import type { LoginItem } from '../../types';
+import type { LoginItem } from './types';
 
 /* redux selector */
 type RSelector = Pick<LoginInitialState, 'loginList'>;

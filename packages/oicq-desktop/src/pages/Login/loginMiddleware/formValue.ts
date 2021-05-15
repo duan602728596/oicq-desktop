@@ -21,7 +21,7 @@ async function formValueMiddleware(ctx: LoginContext, next: Function): Promise<v
     return message.warn('请先去配置oicq的数据存储文件夹！');
   }
 
-  // 检查插件
+  // 检查插件并过滤不存在的插件
   const usePluginsList: Array<PluginItem> = [];
 
   for (const plugin of pluginsList) {
@@ -38,7 +38,7 @@ async function formValueMiddleware(ctx: LoginContext, next: Function): Promise<v
 
   ctx.usePluginsList = usePluginsList;
 
-  // 表单配置
+  // 格式化表单配置
   const loginFormValue: LoginFormValue = Object.assign<
     Pick<LoginFormValue, 'password' | 'platform' | 'remember'>,
     Pick<LoginFormValue, 'uin' | 'logLevel'>
