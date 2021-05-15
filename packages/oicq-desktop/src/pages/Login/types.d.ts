@@ -47,3 +47,8 @@ export interface LoginContext {
   botHook: BotHook;
   clientPlugins: Array<PluginModule>;
 }
+
+export interface AccountItem {
+  uin: string;
+  password: string;
+}
