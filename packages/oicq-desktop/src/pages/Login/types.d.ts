@@ -1,7 +1,7 @@
 import type { Client } from 'oicq';
 import type { Draft } from 'immer';
 import type { Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
-import type { LogLevel, PluginItem, PluginModule, SystemOptions } from '../../types';
+import type { LogLevel, PluginItem, SystemOptions } from '../../types';
 
 // reducer
 export interface QuerySystemOptionsResult {
@@ -31,6 +31,13 @@ export interface LoginFormValue extends Omit<FormValueStore, 'plugins'> {
 // 钩子，可以获取到bot的实例
 interface BotHook {
   destroy?(): void;
+}
+
+// 登陆成功后挂载的实例
+export interface PluginModule {
+  activate(bot: Client | Draft<Client>): Promise<void>;
+  deactivate(bot: Client | Draft<Client>): Promise<void>;
+  destructor?(): Promise<void>;
 }
 
 // ctx挂载的对象

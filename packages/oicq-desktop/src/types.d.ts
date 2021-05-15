@@ -19,10 +19,3 @@ export interface PluginItem {
   esm?: boolean; // 插件以esm方式加载
   use?: boolean; // 插件启用
 }
-
-// 登陆成功后挂载的实例
-export interface PluginModule {
-  activate(bot: Client | Draft<Client>): Promise<void>;
-  deactivate(bot: Client | Draft<Client>): Promise<void>;
-  destructor?(): Promise<void>;
-}

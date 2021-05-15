@@ -1,7 +1,6 @@
 import { requireModuleWithoutCache } from '@sweet-milktea/utils';
 import { importESM } from '../../../utils/utils';
-import type { PluginModule } from '../../../types';
-import type { LoginContext } from '../types';
+import type { LoginContext, PluginModule } from '../types';
 
 /* 登陆成功后加载插件 */
 async function pluginsMiddleware(ctx: LoginContext, next: Function): Promise<void> {
