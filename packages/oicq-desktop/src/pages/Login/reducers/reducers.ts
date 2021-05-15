@@ -1,6 +1,6 @@
 import { createSlice, Slice, SliceCaseReducers, PayloadAction, CaseReducerActions, ActionCreator } from '@reduxjs/toolkit';
-import type { Draft } from 'immer';
-import dbRedux, { systemOptionsObjectStoreName } from '../../../utils/idb/dbRedux';
+import { findIndex } from 'lodash-es';
+import dbRedux, { systemOptionsObjectStoreName, accountObjectStoreName } from '../../../utils/idb/dbRedux';
 import type { LoginItem, SystemOptions } from '../../../types';
 import type { QuerySystemOptionsResult } from '../types';
 
@@ -19,18 +19,38 @@ const { actions, reducer }: Slice = createSlice<LoginInitialState, CaseReducers>
   },
   reducers: {
     // 获取系统配置
-    setSystemOptions(state: Draft<LoginInitialState>, action: PayloadAction<QuerySystemOptionsResult>): void {
+    setSystemOptions(state: LoginInitialState, action: PayloadAction<QuerySystemOptionsResult>): void {
       state.systemOptions = action.payload.result?.value;
+    },
+
+    // 已登陆账号的列表
+    setLoginList(state: LoginInitialState, action: PayloadAction<LoginItem>): void {
+      state.loginList = [...state.loginList, action.payload];
+    },
+
+    // 账号下线
+    setLogout(state: LoginInitialState, action: PayloadAction<LoginItem>): void {
+      const index: number = findIndex(state.loginList, { uin: action.payload.uin });
+
+      if (index >= 0) {
+        state.loginList.splice(index, 1);
+        state.loginList = [...state.loginList];
+      }
     }
   }
 });
 
-export const { setSystemOptions }: CaseReducerActions<CaseReducers> = actions;
+export const { setSystemOptions, setLoginList, setLogout }: CaseReducerActions<CaseReducers> = actions;
 
 // 获取单个配置
 export const getSystemOptionsValue: ActionCreator<any> = dbRedux.getAction({
   objectStoreName: systemOptionsObjectStoreName,
   successAction: setSystemOptions
+});
+
+// 记住账号
+export const saveAccount: ActionCreator<any> = dbRedux.putAction({
+  objectStoreName: accountObjectStoreName
 });
 
 export default { login: reducer };

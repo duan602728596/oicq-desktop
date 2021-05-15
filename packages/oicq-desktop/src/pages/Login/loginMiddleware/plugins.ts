@@ -22,6 +22,8 @@ async function pluginsMiddleware(ctx: LoginContext, next: Function): Promise<voi
   }
 
   ctx.clientPlugins = clientPlugins;
+
+  await next();
 }
 
 export default pluginsMiddleware;

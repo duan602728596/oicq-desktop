@@ -1,4 +1,3 @@
-import { Client } from 'oicq';
 import { useState, useEffect, useMemo, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import * as PropTypes from 'prop-types';
 import type { Dispatch } from 'redux';
@@ -14,7 +13,8 @@ import dbConfig from '../../utils/idb/dbConfig';
 import formValueMiddleware from './loginMiddleware/formValue';
 import loginMiddleware from './loginMiddleware/login';
 import pluginsMiddleware from './loginMiddleware/plugins';
-import type { LogLevel, PluginItem, SystemOptions } from '../../types';
+import successMiddleware from './loginMiddleware/success';
+import type { LogLevel, PluginItem, SystemOptions, LoginItem } from '../../types';
 import type { OnCancelFunc, FormValueStore, BotHook } from './types';
 
 const loginLogLevel: Array<'默认' | LogLevel> = ['默认', ...logLevel];
@@ -28,7 +28,8 @@ const platformOptions: Array<{ value: number; label: string }> = [
 ];
 
 interface LoginModalProps {
-  visible: boolean; // 弹出层的显示隐藏
+  visible: boolean;            // 弹出层的显示隐藏
+  loginList: Array<LoginItem>; // 已登陆的列表
   onCancel: OnCancelFunc;
 }
 
@@ -53,7 +54,7 @@ const selector: Selector<any, RSelector> = createStructuredSelector({
 
 /* 账号登陆 */
 function LoginModal(props: LoginModalProps): ReactElement {
-  const { visible, onCancel }: LoginModalProps = props;
+  const { visible, loginList, onCancel }: LoginModalProps = props;
   const { pluginsList, systemOptions }: RSelector = useSelector(selector);
   const dispatch: Dispatch = useDispatch();
   const [loading, setLoading]: [boolean, D<S<boolean>>] = useState(false); // 登陆后的loading
@@ -95,7 +96,9 @@ function LoginModal(props: LoginModalProps): ReactElement {
     onion.use(formValueMiddleware);
     onion.use(loginMiddleware);
     onion.use(pluginsMiddleware);
+    onion.use(successMiddleware);
     onion.run({
+      loginList,
       formValue,
       onCancel,
       pluginsList,
@@ -172,6 +175,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
 
 LoginModal.propTypes = {
   visible: PropTypes.bool,
+  loginList: PropTypes.array,
   onCancel: PropTypes.func
 };
 

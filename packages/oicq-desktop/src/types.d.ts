@@ -1,4 +1,5 @@
 import type { Client } from 'oicq';
+import type { Draft } from 'immer';
 
 export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'mark' | 'off';
 
@@ -25,7 +26,7 @@ export interface PluginModule {
 
 export interface LoginItem {
   uin: number;
-  client: Client;
+  client: Draft<Client>;
   logLevel: LogLevel;
   plugins: Array<PluginModule>;
 }

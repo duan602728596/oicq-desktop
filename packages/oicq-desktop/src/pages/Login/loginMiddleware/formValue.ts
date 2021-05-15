@@ -1,6 +1,6 @@
 import { isFileExists } from '@sweet-milktea/utils';
 import { message } from 'antd';
-import { pick } from 'lodash-es';
+import { pick, findIndex } from 'lodash-es';
 import type { PluginItem } from '../../../types';
 import type { LoginContext, LoginFormValue } from '../types';
 
@@ -9,7 +9,12 @@ import type { LoginContext, LoginFormValue } from '../types';
  * 处理表单的值
  */
 async function formValueMiddleware(ctx: LoginContext, next: Function): Promise<void> {
-  const { formValue, pluginsList, systemOptions }: LoginContext = ctx;
+  const { loginList, formValue, pluginsList, systemOptions }: LoginContext = ctx;
+
+  // 是否重复登陆
+  if (findIndex(loginList, { uin: Number(formValue.uin) }) >= 0) {
+    return message.warn('账号已登陆！');
+  }
 
   // 检查系统配置
   if (!(await isFileExists(systemOptions?.oicqDataDir))) {

@@ -7,5 +7,6 @@ const objectStore: Array<ObjectStoreItem> = dbConfig.objectStore;
 
 export const systemOptionsObjectStoreName: string = objectStore[0].name;
 export const pluginsObjectStoreName: string = objectStore[1].name;
+export const accountObjectStoreName: string = objectStore[2].name;
 
 export default db;

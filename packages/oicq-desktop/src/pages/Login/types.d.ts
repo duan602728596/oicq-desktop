@@ -1,6 +1,6 @@
 import type { Client } from 'oicq';
 import type { Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
-import type { LogLevel, PluginItem, PluginModule, SystemOptions } from '../../types';
+import type { LoginItem, LogLevel, PluginItem, PluginModule, SystemOptions } from '../../types';
 
 // reducer
 export interface QuerySystemOptionsResult {
@@ -31,6 +31,7 @@ interface BotHook {
 }
 
 export interface LoginContext {
+  loginList: Array<LoginItem>;
   formValue: FormValueStore;
   onCancel: OnCancelFunc;
   pluginsList: Array<PluginItem>;
