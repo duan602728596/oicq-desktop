@@ -15,7 +15,16 @@ async function pluginsMiddleware(ctx: LoginContext, next: Function): Promise<voi
     if (typeof module.activate === 'function') {
       try {
         await module.activate(client);
-        clientPlugins.push(module);
+
+        if (plugin.esm) {
+          clientPlugins.push({
+            activate: module.activate,
+            deactivate: module.deactivate,
+            destructor: module.destructor
+          });
+        } else {
+          clientPlugins.push(module);
+        }
       } catch (err) {
         console.error(plugin.name, err);
       }
