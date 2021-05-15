@@ -172,13 +172,13 @@ function LoginModal(props: LoginModalProps): ReactElement {
   }
 
   useEffect(function(): void {
-    if (visible) {
-      dispatch(queryPluginsList({
-        query: {
-          indexName: dbConfig.objectStore[1].data[0]
-        }
-      }));
+    dispatch(queryPluginsList({
+      query: {
+        indexName: dbConfig.objectStore[1].data[0]
+      }
+    }));
 
+    if (visible) {
       dispatch(getSystemOptionsValue({
         query: 'system_options'
       }));
