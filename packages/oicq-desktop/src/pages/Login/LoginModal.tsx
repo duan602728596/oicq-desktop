@@ -13,6 +13,7 @@ import { getSystemOptionsValue, LoginInitialState } from './reducers/reducers';
 import dbConfig from '../../utils/idb/dbConfig';
 import formValueMiddleware from './loginMiddleware/formValue';
 import loginMiddleware from './loginMiddleware/login';
+import pluginsMiddleware from './loginMiddleware/plugins';
 import type { LogLevel, PluginItem, SystemOptions } from '../../types';
 import type { OnCancelFunc, FormValueStore, BotHook } from './types';
 
@@ -93,6 +94,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
 
     onion.use(formValueMiddleware);
     onion.use(loginMiddleware);
+    onion.use(pluginsMiddleware);
     onion.run({
       formValue,
       onCancel,

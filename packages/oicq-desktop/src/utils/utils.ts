@@ -1,3 +1,7 @@
+/* 加载esm模块 */
+// eslint-disable-next-line no-new-func
+export const importESM: <T = any>(id: string) => Promise<T> = new Function('id', 'return import(id)') as any;
+
 /* 随机字符串 */
 export function randomStr(len: number): string {
   const str: string = 'QWERTYUIOPASDFGHJKLZXCVBNM1234567890';

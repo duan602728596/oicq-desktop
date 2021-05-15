@@ -16,8 +16,16 @@ export interface PluginItem {
   use?: boolean;
 }
 
+// 登陆成功后挂载的实例
+export interface PluginModule {
+  activate(bot: Client): Promise<void>;
+  deactivate(bot: Client): Promise<void>;
+  destructor?(): Promise<void>;
+}
+
 export interface LoginItem {
   uin: number;
   client: Client;
   logLevel: LogLevel;
+  plugins: Array<PluginModule>;
 }

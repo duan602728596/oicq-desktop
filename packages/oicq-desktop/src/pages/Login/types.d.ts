@@ -1,6 +1,6 @@
 import type { Client } from 'oicq';
 import type { Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
-import type { LogLevel, PluginItem, SystemOptions } from '../../types';
+import type { LogLevel, PluginItem, PluginModule, SystemOptions } from '../../types';
 
 // reducer
 export interface QuerySystemOptionsResult {
@@ -44,4 +44,5 @@ export interface LoginContext {
   // 机器人
   client: Client;
   botHook: BotHook;
+  clientPlugins: Array<PluginModule>;
 }

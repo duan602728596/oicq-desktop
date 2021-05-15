@@ -1,0 +1,1 @@
+export default '@oicq-desktop/test-plugin';
