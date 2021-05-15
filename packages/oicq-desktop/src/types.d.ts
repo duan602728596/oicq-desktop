@@ -4,6 +4,7 @@ export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' |
 
 export interface SystemOptions {
   oicqDataDir: string;
+  browser?: string;
   logLevel?: LogLevel;
 }
 

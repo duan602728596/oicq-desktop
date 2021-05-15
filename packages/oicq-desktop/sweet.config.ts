@@ -68,7 +68,8 @@ export default function(info: object): { [key: string]: any } {
       'log4js',
       'log4js/lib/appenders/stdout',
       'log4js/lib/appenders/console',
-      'oicq'
+      'oicq',
+      'puppeteer-core'
     ]),
     js: {
       ecmascript: true,

@@ -54,6 +54,19 @@ function Index(props: {}): ReactElement {
     });
   }
 
+  // 选择浏览器
+  async function handleBrowserFileClick(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    const result: OpenDialogReturnValue = await dialog.showOpenDialog({
+      properties: ['openFile']
+    });
+
+    if (result.canceled || !result.filePaths || result.filePaths.length === 0) return;
+
+    setFieldsValue({
+      browser: result.filePaths[0]
+    });
+  }
+
   useEffect(function(): void {
     getFormValue();
   }, []);
@@ -78,6 +91,18 @@ function Index(props: {}): ReactElement {
           </div>
           <div className={ classNames(style.flexFixed, style.marginLeft8) }>
             <Button onClick={ handleSelectOicqDataDirClick }>选择文件夹</Button>
+          </div>
+        </div>
+      </Form.Item>
+      <Form.Item label="浏览器(用于验证码)">
+        <div className={ style.flexLayout }>
+          <div className={ style.flexAuto }>
+            <Form.Item name="browser" noStyle={ true }>
+              <Input allowClear={ true } />
+            </Form.Item>
+          </div>
+          <div className={ classNames(style.flexFixed, style.marginLeft8) }>
+            <Button onClick={ handleBrowserFileClick }>选择文件</Button>
           </div>
         </div>
       </Form.Item>
