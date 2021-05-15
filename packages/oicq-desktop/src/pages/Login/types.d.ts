@@ -25,6 +25,11 @@ export interface LoginFormValue extends Omit<FormValueStore, 'plugins'> {
   logLevel: LogLevel;
 }
 
+// 钩子，可以获取到bot的实例
+interface BotHook {
+  destroy?(): void;
+}
+
 export interface LoginContext {
   formValue: FormValueStore;
   onCancel: OnCancelFunc;
@@ -38,4 +43,5 @@ export interface LoginContext {
 
   // 机器人
   client: Client;
+  botHook: BotHook;
 }

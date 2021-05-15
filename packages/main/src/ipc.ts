@@ -1,6 +1,6 @@
 import { ipcMain, BrowserWindow, IpcMainEvent } from 'electron';
 
-const DEVELOP_TOOLS_CHANNEL: string = 'developer-tools';
+const DEVELOP_TOOLS_CHANNEL: string = 'developer-tools'; // 开发者工具
 
 /* 移除所有监听的通信 */
 const removeListenerChannel: Array<string> = [

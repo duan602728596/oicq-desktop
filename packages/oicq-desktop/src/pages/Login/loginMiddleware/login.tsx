@@ -1,15 +1,23 @@
 import { shell } from 'electron';
-import { createClient, Client, SliderEventData, DeviceEventData, OnlineEventData } from 'oicq';
+import {
+  createClient,
+  Client,
+  SliderEventData,
+  DeviceEventData,
+  OnlineEventData,
+  LoginErrorEventData,
+  OfflineEventData
+} from 'oicq';
 import { useState, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import { render } from 'react-dom';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import type { LoginContext, LoginFormValue } from '../types';
 
 let loginDeviceElement: HTMLDivElement | null = null;
 
 /* 登陆账号，创建bot */
 function loginMiddleware(ctx: LoginContext, next: Function): void {
-  const { systemOptions, loginFormValue, setLoading }: LoginContext = ctx;
+  const { systemOptions, loginFormValue, setLoading, botHook }: LoginContext = ctx;
 
   setLoading(true);
 
@@ -23,7 +31,7 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
 
   // 监听验证码
   bot.on('system.login.slider', function(e: SliderEventData): void {
-    console.log(e);
+    //
   });
 
   // 监听设备锁
@@ -46,7 +54,7 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
 
       // 确认登陆
       function handleLoginOk(event: MouseEvent<HTMLButtonElement>): void {
-        bot.sendSMSCode();
+        bot.login(loginFormValue.password);
         setVisible(false);
       }
 
@@ -82,8 +90,26 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
 
   // 登陆成功
   bot.on('system.online', function(e: OnlineEventData): void {
-    console.log(e);
+    // 模拟个接口 'https://api.bilibili.com/x/web-interface/nav'
   });
+
+  // 登陆失败
+  bot.on('system.login.error', function(e: LoginErrorEventData): void {
+    message.error(e.message);
+    bot.logout();
+    setLoading(false);
+  });
+
+  // 被下线
+  bot.on('system.offline', function(e: OfflineEventData): void {
+    message.error(e.message);
+    bot.logout();
+    setLoading(false);
+  });
+
+  botHook.destroy = function(): void {
+    bot.logout();
+  };
 
   bot.login(loginFormValue.password);
   ctx.client = bot;

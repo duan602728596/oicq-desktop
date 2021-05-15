@@ -1,3 +1,4 @@
+import { Client } from 'oicq';
 import { useState, useEffect, useMemo, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import * as PropTypes from 'prop-types';
 import type { Dispatch } from 'redux';
@@ -13,7 +14,7 @@ import dbConfig from '../../utils/idb/dbConfig';
 import formValueMiddleware from './loginMiddleware/formValue';
 import loginMiddleware from './loginMiddleware/login';
 import type { LogLevel, PluginItem, SystemOptions } from '../../types';
-import type { OnCancelFunc, FormValueStore } from './types';
+import type { OnCancelFunc, FormValueStore, BotHook } from './types';
 
 const loginLogLevel: Array<'默认' | LogLevel> = ['默认', ...logLevel];
 // 登陆设备 1:安卓手机(默认) 2:aPad 3:安卓手表 4:MacOS 5:iPad
@@ -29,6 +30,8 @@ interface LoginModalProps {
   visible: boolean; // 弹出层的显示隐藏
   onCancel: OnCancelFunc;
 }
+
+const botHook: BotHook = {};
 
 /* redux selector */
 type RSelector = PluginsInitialState & Pick<LoginInitialState, 'systemOptions'>;
@@ -95,8 +98,16 @@ function LoginModal(props: LoginModalProps): ReactElement {
       onCancel,
       pluginsList,
       systemOptions,
-      setLoading
+      setLoading,
+      botHook
     });
+  }
+
+  // 关闭时需要销毁登陆的bot
+  function handleCloseClick(event: MouseEvent<HTMLButtonElement>): void {
+    botHook.destroy?.();
+    onCancel(event);
+    setLoading(false);
   }
 
   useEffect(function(): void {
@@ -124,7 +135,7 @@ function LoginModal(props: LoginModalProps): ReactElement {
       confirmLoading={ loading }
       afterClose={ resetFields }
       onOk={ handleLoginClick }
-      onCancel={ onCancel }
+      onCancel={ handleCloseClick }
     >
       <Form form={ form }
         initialValues={{ logLevel: '默认', plugins: defaultTransferPluginsList, platform: 2 }}
