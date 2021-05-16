@@ -1,0 +1,27 @@
+{
+  "name": "@oicq-desktop/oicq-server-plugin",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "npm run clean && cross-env NODE_ENV=development WATCH=1 gulp",
+    "build": "npm run clean && cross-env NODE_ENV=production gulp",
+    "clean": "rimraf ./lib"
+  },
+  "main": "./dist/index.js",
+  "dependencies": {
+    "@koa/router": "^10.0.0",
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "lodash": "^4.17.21",
+    "ws": "^7.4.5"
+  },
+  "devDependencies": {
+    "@types/koa": "^2",
+    "@types/lodash": "^4",
+    "@types/ws": "^7",
+    "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "oicq": "^1.16.1"
+  }
+}

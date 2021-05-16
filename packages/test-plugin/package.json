@@ -1,7 +1,0 @@
-{
-  "name": "@oicq-desktop/test-plugin",
-  "version": "0.0.0",
-  "dependencies": {
-    "md5": "^2.3.0"
-  }
-}
