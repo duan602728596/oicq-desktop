@@ -106,7 +106,6 @@ class OicqServer {
     }
   }
 
-
   /* 初始化服务，包括创建中间件等 */
   init(): void {
     // post body
