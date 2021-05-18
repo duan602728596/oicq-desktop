@@ -71,7 +71,7 @@ class OicqServer {
   /* oicq监听的事件 */
   handleOicqEventFunc(event: SystemEventData | MessageEventData | RequestEventData | NoticeEventData): void {
     for (const socket of this.sockets) {
-      socket.send(event);
+      socket.send(JSON.stringify(event));
     }
   }
 

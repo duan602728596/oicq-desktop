@@ -4,7 +4,8 @@
   "scripts": {
     "start": "npm run clean && cross-env NODE_ENV=development WATCH=1 gulp",
     "build": "npm run clean && cross-env NODE_ENV=production gulp",
-    "clean": "rimraf ./lib"
+    "clean": "rimraf ./lib",
+    "example": "serve ./example -p 5058"
   },
   "main": "./dist/index.js",
   "dependencies": {
@@ -23,6 +24,7 @@
     "gulp-plumber": "^1.2.1",
     "gulp-typescript": "^6.0.0-alpha.1",
     "oicq": "^1.16.1",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "serve": "^11.3.2"
   }
 }
