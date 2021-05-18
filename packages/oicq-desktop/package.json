@@ -1,6 +1,7 @@
 {
   "name": "@oicq-desktop/oicq-desktop",
   "version": "0.0.0",
+  "description": "oicq的软件源代码",
   "main": "../main/lib/main.js",
   "scripts": {
     "runel": "cross-env NODE_ENV=development electron ./",

@@ -1,6 +1,7 @@
 {
   "name": "@oicq-desktop/main",
   "version": "0.0.0",
+  "description": "Electron主程序运行源代码",
   "scripts": {
     "start": "npm run clean && cross-env NODE_ENV=development WATCH=1 gulp",
     "dev": "npm run clean && cross-env NODE_ENV=development gulp",
