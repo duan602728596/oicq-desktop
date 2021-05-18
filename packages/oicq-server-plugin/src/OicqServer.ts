@@ -8,6 +8,8 @@ import * as body from 'koa-body';
 import * as ws from 'ws';
 import * as _ from 'lodash';
 import type { Client, SystemEventData, MessageEventData, RequestEventData, NoticeEventData } from 'oicq';
+import { formatList, formatGml } from './formatData';
+import type { InfoItem } from './types';
 
 interface OicqServerArgs {
   port: number; // 端口
@@ -96,7 +98,17 @@ class OicqServer {
     const { varName }: { varName: string } = ctx.params;
 
     if (varName in this.bot) {
-      ctx.body = this.bot[varName];
+      let data: InfoItem | any = this.bot[varName];
+
+      if (['fl', 'sl', 'gl'].includes(varName)) {
+        data = formatList(data);
+      }
+
+      if (varName === 'gml') {
+        data = formatGml(data);
+      }
+
+      ctx.body = { data };
     } else {
       ctx.status = 404;
       ctx.body = {

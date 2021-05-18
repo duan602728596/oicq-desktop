@@ -22,3 +22,4 @@ lib
 www
 build
 dist
+server-plugin.config.js
