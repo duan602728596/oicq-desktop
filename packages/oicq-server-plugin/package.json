@@ -22,6 +22,7 @@
     "gulp-changed": "^4.0.2",
     "gulp-plumber": "^1.2.1",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "oicq": "^1.16.1"
+    "oicq": "^1.16.1",
+    "rimraf": "^3.0.2"
   }
 }

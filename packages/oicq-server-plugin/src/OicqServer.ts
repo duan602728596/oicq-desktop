@@ -11,6 +11,13 @@ import type { Client, SystemEventData, MessageEventData, RequestEventData, Notic
 import { formatList, formatGml } from './formatData';
 import type { InfoItem } from './types';
 
+if (typeof SharedArrayBuffer !== 'function') {
+  // @ts-ignore
+  global.SharedArrayBuffer = function(): void {
+    throw new Error('当前环境不存在SharedArrayBuffer函数。');
+  };
+}
+
 interface OicqServerArgs {
   port: number; // 端口
   bot: Client;
@@ -22,7 +29,7 @@ class OicqServer {
   public router: Router;
   public wsServer: ws.Server;
   public httpServer: Server;
-  public sockets: Array<ws>;
+  public sockets: Array<ws> = [];
   public bot: Client;
 
   constructor(oicqServerArgs: OicqServerArgs) {
@@ -70,7 +77,7 @@ class OicqServer {
 
   /* 通过接口触发事件 */
   async actionRouter(ctx: Context, next: Next): Promise<void> {
-    const postBody: { type: string; payload: Array<any> } = ctx.body as any;
+    const postBody: { type: string; payload: Array<any> } = ctx.request.body;
 
     if (typeof this.bot[postBody.type] === 'function') {
       const args: Array<string> = postBody.payload ?? [];
