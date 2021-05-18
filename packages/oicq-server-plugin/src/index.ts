@@ -22,8 +22,8 @@ export function activate(bot: Client): void {
 
   // 创建服务
   const server: OicqServer = new OicqServer({
-    bot,
-    port: uinConfig.port
+    port: uinConfig.port,
+    bot
   });
 
   serverMaps.push({ bot, server });
