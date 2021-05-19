@@ -14,6 +14,7 @@ const zipPromise = util.promisify(zip.zip);
 const { __dirname } = metaHelper(import.meta.url);
 const baseTypescriptConfig = await requireJson(path.join(__dirname, '../../tsconfig.json'));
 const tsConfig = await requireJson(path.join(__dirname, './tsconfig.json'));
+const packageJson = await requireJson(path.join(__dirname, './package.json'));
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isWatch = process.env.WATCH;
@@ -51,7 +52,10 @@ async function compressedFile() {
     fse.copy('package.json', 'build/oicq-server-plugin/package.json'),
     fse.copy('server-plugin.config-example.js', 'build/oicq-server-plugin/server-plugin.config.js')
   ]);
-  await zipPromise(path.join(__dirname, 'build/oicq-server-plugin'), path.join(__dirname, 'build/oicq-server-plugin.zip'));
+  await zipPromise(
+    path.join(__dirname, 'build/oicq-server-plugin'),
+    path.join(__dirname, `build/oicq-server-plugin-${ packageJson.version }.zip`)
+  );
   await fse.remove(path.join(__dirname, 'build/oicq-server-plugin'));
 }
 
