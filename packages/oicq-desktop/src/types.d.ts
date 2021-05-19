@@ -1,6 +1,3 @@
-import type { Client } from 'oicq';
-import type { Draft } from 'immer';
-
 // 日志等级
 export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'mark' | 'off';
 
