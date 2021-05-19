@@ -2,10 +2,10 @@ import type { Client } from 'oicq';
 import * as _ from 'lodash';
 import { requireModuleWithoutCache } from '@sweet-milktea/utils';
 import OicqServer from './OicqServer';
-import type { ServerMapsItem, ConfigItem } from './types';
+import type { ServerMapsItem, ConfigItem, ServerPluginConfig } from './types';
 
 const serverMaps: Array<ServerMapsItem> = []; // 保存bot和server
-let serverPluginConfig: { config: Array<ConfigItem> };
+let serverPluginConfig: ServerPluginConfig;
 
 export function activate(bot: Client): void {
   console.info('%c 插件加载：oicq-server-plugin ', 'background-color: #fa8c16; color: #fff;');

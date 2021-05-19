@@ -12,5 +12,9 @@ export interface ConfigItem {
   port: number;
 }
 
+export interface ServerPluginConfig {
+  config: Array<ConfigItem>;
+}
+
 export type InfoItem = FriendInfo | StrangerInfo | GroupInfo | MemberInfo;
 export type GmlItem = [number, Array<MemberInfo>];
