@@ -51,7 +51,6 @@ async function formValueMiddleware(ctx: LoginContext, next: Function): Promise<v
   );
 
   ctx.loginFormValue = loginFormValue;
-
   await next();
 }
 
