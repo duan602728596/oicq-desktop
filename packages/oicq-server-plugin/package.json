@@ -13,13 +13,13 @@
   "main": "./dist/index.js",
   "dependencies": {
     "@koa/router": "^10.0.0",
+    "@sweet-milktea/utils": "^3.0.0",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "lodash": "^4.17.21",
     "ws": "^7.4.5"
   },
   "devDependencies": {
-    "@sweet-milktea/utils": "^3.0.0",
     "@types/koa": "^2",
     "@types/lodash": "^4",
     "@types/ws": "^7",

@@ -11,7 +11,7 @@ import {
   LoginErrorEventData,
   OfflineEventData
 } from 'oicq';
-import { useState, useEffect, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
+import { useState, useEffect, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent, ChangeEvent } from 'react';
 import { render } from 'react-dom';
 import { Modal, message, Input } from 'antd';
 import type { LoginContext, LoginFormValue } from '../types';
@@ -61,8 +61,11 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
             page.on('response', async function(res: HTTPResponse): Promise<void> {
               const uri: string = res.url();
 
+              // https://t.captcha.qq.com/cap_union_new_verify
               if (uri.includes('cap_union_new_verify')) {
                 const json: { ticket: string } = await res.json();
+
+                console.log(json);
 
                 setTicket(json.ticket);
               }
@@ -107,6 +110,11 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
         setVisible(false);
       }
 
+      // 同步input
+      function handleInputChange(event: ChangeEvent): void {
+        setVisible(event.target['value']);
+      }
+
       useEffect(function(): void {
         openSliderPage();
       }, []);
@@ -130,7 +138,7 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
             <a role="button" aria-label="滑动验证码验证" onClick={ handleOpenSliderPageClick }>滑动验证码验证</a>。
           </p>
           <div>
-            <Input addonBefore="ticket" />
+            <Input addonBefore="ticket" value={ ticket } onChange={ handleInputChange } />
           </div>
         </Modal>
       );
