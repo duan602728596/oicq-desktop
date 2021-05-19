@@ -39,6 +39,7 @@
     "@sweet-milktea/utils": "^3.0.0",
     "babel-plugin-import": "^1.13.3",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "cross-env": "^7.0.3",
     "ts-loader": "^9.1.2",
     "webpack-bundle-analyzer": "^4.4.1"
   }
