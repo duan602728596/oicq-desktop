@@ -1,14 +1,16 @@
 import type { Client } from 'oicq';
 import * as _ from 'lodash';
 import OicqServer from './OicqServer';
-import serverPluginConfig from '../server-plugin.config';
 import type { ServerMapsItem, ConfigItem } from './types';
 
-const config: Array<ConfigItem> = serverPluginConfig.config ?? []; // 配置
 const serverMaps: Array<ServerMapsItem> = []; // 保存bot和server
+let serverPluginConfig: { config: Array<ConfigItem> };
 
 export function activate(bot: Client): void {
   console.info('%c 插件加载：oicq-server-plugin ', 'background-color: #fa8c16; color: #fff;');
+
+  serverPluginConfig = globalThis.require('../server-plugin.config');
+  const config: Array<ConfigItem> = serverPluginConfig.config ?? []; // 配置
 
   // 判断是否已加载
   const index: number = _.findIndex(serverMaps, (o: ServerMapsItem): boolean => o.bot.uin === bot.uin);

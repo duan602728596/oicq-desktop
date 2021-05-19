@@ -5,6 +5,7 @@
   "scripts": {
     "start": "npm run clean && cross-env NODE_ENV=development WATCH=1 gulp",
     "build": "npm run clean && cross-env NODE_ENV=production gulp",
+    "build:compress": "npm run clean && rimraf ./build && cross-env NODE_ENV=production COMPRESS=1 gulp",
     "clean": "rimraf ./lib",
     "example": "serve ./example -p 5058"
   },
@@ -20,6 +21,8 @@
     "@types/koa": "^2",
     "@types/lodash": "^4",
     "@types/ws": "^7",
+    "cross-zip": "^4.0.0",
+    "fs-extra": "^10.0.0",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.2",
     "gulp-plumber": "^1.2.1",

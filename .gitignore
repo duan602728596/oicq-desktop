@@ -23,3 +23,5 @@ www
 build
 dist
 server-plugin.config.js
+packages/**/*.zip
+packages/**/build
