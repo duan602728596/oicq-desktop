@@ -65,8 +65,6 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
               if (uri.includes('cap_union_new_verify')) {
                 const json: { ticket: string } = await res.json();
 
-                console.log(json);
-
                 setTicket(json.ticket);
               }
             });
