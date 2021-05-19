@@ -17,6 +17,16 @@ import type { LoginContext } from '../types';
 let loginDeviceElement: HTMLDivElement | null = null;
 let loginSliderElement: HTMLDivElement | null = null;
 
+function removeLoginDeviceElement(): void {
+  document.body.removeChild(loginDeviceElement!);
+  loginDeviceElement = null;
+}
+
+function removeLoginSliderElement(): void {
+  document.body.removeChild(loginSliderElement!);
+  loginSliderElement = null;
+}
+
 /* 登陆账号，创建bot */
 function loginMiddleware(ctx: LoginContext, next: Function): void {
   const { systemOptions, loginFormValue, setLoading, botHook }: LoginContext = ctx;
@@ -32,32 +42,33 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
   });
 
   // 监听验证码
-  bot.on('system.login.slider', function(e: SliderEventData): void {
+  bot.on('system.login.slider', function(sliderEvent: SliderEventData): void {
     loginSliderElement = document.createElement('div');
+    document.body.appendChild(loginSliderElement);
     render(
       <LoginSliderModal systemOptions={ systemOptions }
-        sliderEvent={ e }
+        sliderEvent={ sliderEvent }
         bot={ bot }
         setLoading={ setLoading }
-        afterClose={ (): null => loginSliderElement = null }
+        afterClose={ removeLoginSliderElement }
       />,
       loginSliderElement
     );
   });
 
   // 监听设备锁
-  bot.on('system.login.device', function(e: DeviceEventData): void {
+  bot.on('system.login.device', function(deviceEvent: DeviceEventData): void {
     loginDeviceElement = document.createElement('div');
+    document.body.appendChild(loginDeviceElement);
     render(
       <LoginDeviceModal loginFormValue={ loginFormValue }
-        deviceEvent={ e }
+        deviceEvent={ deviceEvent }
         bot={ bot }
         setLoading={ setLoading }
-        afterClose={ (): null => loginDeviceElement = null }
+        afterClose={ removeLoginDeviceElement }
       />,
       loginDeviceElement
     );
-    shell.openExternal(e.url);
   });
 
   // 登陆成功
