@@ -39,7 +39,7 @@ class OicqServer {
     this.router = new Router();              // koa-router
     this.wsServer = new ws.Server({  // websocket服务
       noServer: true,
-      path: '/ws'
+      path: '/oicq/ws'
     });
   }
 
