@@ -61,6 +61,7 @@ class OicqServer {
       const index: number = _.findIndex(this.sockets, connection);
 
       if (index >= 0) {
+        this.sockets[index].terminate();
         this.sockets.splice(index, 1);
       }
     });
