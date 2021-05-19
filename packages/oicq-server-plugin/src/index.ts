@@ -1,3 +1,4 @@
+import * as path from 'path';
 import type { Client } from 'oicq';
 import * as _ from 'lodash';
 import { requireModuleWithoutCache } from '@sweet-milktea/utils';
@@ -10,7 +11,7 @@ let serverPluginConfig: ServerPluginConfig;
 export function activate(bot: Client): void {
   console.info('%c 插件加载：oicq-server-plugin ', 'background-color: #fa8c16; color: #fff;');
 
-  serverPluginConfig = requireModuleWithoutCache('../server-plugin.config', false);
+  serverPluginConfig = requireModuleWithoutCache(path.join(__dirname, '../server-plugin.config'), false);
   const config: Array<ConfigItem> = serverPluginConfig.config ?? []; // 配置
 
   // 判断是否已加载
