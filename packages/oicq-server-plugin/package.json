@@ -22,6 +22,7 @@
     "@types/koa": "^2",
     "@types/lodash": "^4",
     "@types/ws": "^7",
+    "@sweet-milktea/utils": "^3.0.0",
     "cross-zip": "^4.0.0",
     "fs-extra": "^10.0.0",
     "gulp": "^4.0.2",
