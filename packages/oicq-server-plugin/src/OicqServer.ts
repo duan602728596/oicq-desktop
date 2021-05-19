@@ -13,7 +13,7 @@ import type { InfoItem } from './types';
 
 if (typeof SharedArrayBuffer !== 'function') {
   // @ts-ignore
-  global.SharedArrayBuffer = function(): void {
+  globalThis.SharedArrayBuffer = function(): void {
     throw new Error('当前环境不存在SharedArrayBuffer函数。');
   };
 }
