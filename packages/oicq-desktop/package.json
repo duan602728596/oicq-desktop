@@ -1,6 +1,6 @@
 {
   "name": "@oicq-desktop/oicq-desktop",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "oicq的软件源代码",
   "main": "../main/lib/main.js",
   "scripts": {

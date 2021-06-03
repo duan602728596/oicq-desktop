@@ -51,6 +51,7 @@ async function compressedFile() {
     fse.copy('dist', 'build/oicq-server-plugin/dist'),
     fse.copy('package.json', 'build/oicq-server-plugin/package.json'),
     fse.copy(path.join(__dirname, '../../LICENSE'), 'build/oicq-server-plugin/LICENSE'),
+    fse.copy('README.md', 'build/oicq-server-plugin/README.md'),
     fse.copy('server-plugin.config-example.js', 'build/oicq-server-plugin/server-plugin.config.js')
   ]);
   await zipPromise(

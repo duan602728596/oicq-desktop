@@ -1,6 +1,6 @@
 {
   "name": "@oicq-desktop/oicq-server-plugin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "oicq插件，支持http和websocket",
   "license": "MPL-2.0",
   "scripts": {
