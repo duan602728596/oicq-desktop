@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import type { OpenDialogReturnValue } from 'electron';
 import { dialog } from '@electron/remote';
 import { useEffect, ReactElement, MouseEvent } from 'react';
@@ -8,7 +9,6 @@ import { Modal, Form, Input, Button, Switch, message, FormInstance } from 'antd'
 import classNames from 'classnames';
 import { omit } from 'lodash-es';
 import style from './pluginModal.sass';
-import { randomStr } from '../../utils/utils';
 import { saveAPlugin } from './reducers/reduces';
 import type { PluginItem } from '../../types';
 
@@ -38,7 +38,7 @@ function PluginModal(props: PluginModalProps): ReactElement {
     if (item) {
       formValue.id = item.id;
     } else {
-      formValue.id = randomStr(30);
+      formValue.id = randomUUID();
       formValue.use = true;
     }
 
