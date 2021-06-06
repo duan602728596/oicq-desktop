@@ -62,6 +62,7 @@ export default function(info: object): { [key: string]: any } {
     },
     html: [{ template: path.join(__dirname, 'src/index.pug'), minify: htmlWebpackPluginMinify }],
     externals: nodeExternals([
+      'crypto',
       '@electron/remote',
       '@sweet-milktea/utils',
       'electron',
