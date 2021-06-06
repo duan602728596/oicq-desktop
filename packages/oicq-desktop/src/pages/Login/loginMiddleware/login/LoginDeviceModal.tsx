@@ -1,11 +1,19 @@
 import { shell } from 'electron';
 import type { Client, DeviceEventData } from 'oicq';
+import * as puppeteer from 'puppeteer-core';
+import type { Browser, Page, HTTPRequest } from 'puppeteer-core';
+import { isFileExists } from '@sweet-milktea/utils';
 import { useState, useEffect, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import * as PropTypes from 'prop-types';
 import { Modal } from 'antd';
+import qqapi from 'raw-loader!./qqapi.wk.js';
 import type { LoginFormValue } from '../../types';
+import type { SystemOptions } from '../../../../types';
+
+let browser: Browser | null = null;
 
 interface LoginDeviceModalProps {
+  systemOptions: SystemOptions | undefined;
   loginFormValue: LoginFormValue;
   deviceEvent: DeviceEventData;
   bot: Client;
@@ -15,12 +23,61 @@ interface LoginDeviceModalProps {
 
 /* 监听设备锁 */
 function LoginDeviceModal(props: LoginDeviceModalProps): ReactElement {
-  const { loginFormValue, deviceEvent, bot, setLoading, afterClose }: LoginDeviceModalProps = props;
+  const { systemOptions, loginFormValue, deviceEvent, bot, setLoading, afterClose }: LoginDeviceModalProps = props;
   const [visible, setVisible]: [boolean, D<S<boolean>>] = useState(true);
 
   // 打开浏览器
-  function openDevicePage(): void {
-    shell.openExternal(deviceEvent.url);
+  async function openDevicePage(): Promise<void> {
+    if (browser !== null) return;
+
+    if (systemOptions?.browser && await isFileExists(systemOptions.browser)) {
+      try {
+        browser = await puppeteer.launch({
+          headless: false,
+          executablePath: systemOptions.browser,
+          defaultViewport: {
+            width: 600,
+            height: 400
+          }
+        });
+
+        const page: Page = await browser.newPage();
+
+        await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) '
+          + 'AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/18F72 QQ/8.8.0.608 V1_IPH_SQ_8.8.0_1_APP_A Pixel/828 '
+          + 'SimpleUISwitch/0 StudyMode/0 QQTheme/1000 Core/WKWebView Device/Apple(iPhone XR) '
+          + 'NetType/WIFI QBWebViewType/1 WKType/1');
+        await page.setCacheEnabled(false);
+        await page.setRequestInterception(true);
+
+        page.on('request', async function(req: HTTPRequest): Promise<void> {
+          if (/qqapi\.wk/i.test(req.url())) {
+            await req.respond({
+              status: 200,
+              contentType: 'application/javascript; charset=utf-8',
+              body: qqapi
+            });
+          } else {
+            await req.continue();
+          }
+        });
+
+        page.on('close', function(): void {
+          browser?.close();
+          browser = null;
+        });
+
+        await page.goto(deviceEvent.url, {
+          referer: deviceEvent.url
+        });
+      } catch (err) {
+        console.error(err);
+        browser?.close();
+        browser = null;
+      }
+    } else {
+      shell.openExternal(deviceEvent.url);
+    }
   }
 
   // 打开无头浏览器

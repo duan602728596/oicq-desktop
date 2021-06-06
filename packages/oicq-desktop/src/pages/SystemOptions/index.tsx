@@ -90,11 +90,11 @@ function Index(props: {}): ReactElement {
             </Form.Item>
           </div>
           <div className={ classNames(style.flexFixed, style.marginLeft8) }>
-            <Button onClick={ handleSelectOicqDataDirClick }>选择文件夹</Button>
+            <Button className={ style.dialogBtn } onClick={ handleSelectOicqDataDirClick }>选择文件夹</Button>
           </div>
         </div>
       </Form.Item>
-      <Form.Item label="浏览器(用于验证码)">
+      <Form.Item label="浏览器">
         <div className={ style.flexLayout }>
           <div className={ style.flexAuto }>
             <Form.Item name="browser" noStyle={ true }>
@@ -102,9 +102,10 @@ function Index(props: {}): ReactElement {
             </Form.Item>
           </div>
           <div className={ classNames(style.flexFixed, style.marginLeft8) }>
-            <Button onClick={ handleBrowserFileClick }>选择文件</Button>
+            <Button className={ style.dialogBtn } onClick={ handleBrowserFileClick }>选择文件</Button>
           </div>
         </div>
+        <p className={ style.tips }>配置后，滑动验证码可以自动获取ticket，设备验证会显示扫码选项。</p>
       </Form.Item>
       <Form.Item name="logLevel" label="默认日志等级">
         <Radio.Group options={ logLevel } />

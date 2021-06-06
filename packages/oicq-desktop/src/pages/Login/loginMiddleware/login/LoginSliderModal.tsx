@@ -2,10 +2,10 @@ import { shell } from 'electron';
 import type { SliderEventData, Client } from 'oicq';
 import * as puppeteer from 'puppeteer-core';
 import type { Browser, Page, HTTPResponse } from 'puppeteer-core';
+import { isFileExists } from '@sweet-milktea/utils';
 import { useState, useEffect, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent, ChangeEvent } from 'react';
 import * as PropTypes from 'prop-types';
 import { Input, Modal } from 'antd';
-import { isFileExists } from '@sweet-milktea/utils';
 import type { SystemOptions } from '../../../../types';
 
 let browser: Browser | null = null;

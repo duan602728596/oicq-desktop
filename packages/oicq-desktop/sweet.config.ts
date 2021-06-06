@@ -74,7 +74,7 @@ export default function(info: object): { [key: string]: any } {
     js: {
       ecmascript: true,
       plugins,
-      exclude: /node_modules/i
+      exclude: /node_modules|qqapi\.wk\.js/i
     },
     ts: {
       configFile: isDev ? 'tsconfig.json' : 'tsconfig.prod.json',

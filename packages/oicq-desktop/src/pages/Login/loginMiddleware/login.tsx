@@ -61,7 +61,8 @@ function loginMiddleware(ctx: LoginContext, next: Function): void {
     loginDeviceElement = document.createElement('div');
     document.body.appendChild(loginDeviceElement);
     render(
-      <LoginDeviceModal loginFormValue={ loginFormValue }
+      <LoginDeviceModal systemOptions={ systemOptions }
+        loginFormValue={ loginFormValue }
         deviceEvent={ deviceEvent }
         bot={ bot }
         setLoading={ setLoading }
