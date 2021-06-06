@@ -20,6 +20,7 @@ function createWindow(): void {
       nodeIntegration: true,
       nodeIntegrationInWorker: true,
       webSecurity: false,
+      // @ts-ignore
       enableRemoteModule: true,
       contextIsolation: false
     },
