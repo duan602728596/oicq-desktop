@@ -1,6 +1,6 @@
 {
   "name": "@oicq-desktop/app",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "基于oicq的客户端",
   "license": "MPL-2.0",
   "main": "bin/lib/main.js",
