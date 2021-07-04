@@ -75,13 +75,17 @@ export default function(info: object): { [key: string]: any } {
     js: {
       ecmascript: true,
       plugins,
-      exclude: /node_modules|qqapi\.wk\.js/i
+      exclude: /node_modules|qqapi\.wk/i
     },
     ts: {
       configFile: isDev ? 'tsconfig.json' : 'tsconfig.prod.json',
       plugins,
       exclude: /node_modules/
     },
+    rules: [{
+      resourceQuery: /qqapi\.wk/,
+      type: 'asset/source'
+    }],
     sass: {
       include: /src/
     },

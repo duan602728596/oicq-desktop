@@ -65,12 +65,6 @@ declare module 'worker-loader!*' {
   export default WorkerLoader;
 }
 
-declare module '*?raw' {
-  const data: string;
-
-  export default data;
-}
-
 declare module '@electron/remote' {
   import type { Remote, Dialog } from 'electron';
 
