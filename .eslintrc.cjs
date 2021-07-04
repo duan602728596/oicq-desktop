@@ -14,6 +14,7 @@ module.exports = {
     serviceworker: true
   },
   parserOptions: {
+    ecmaVersion: 2021,
     ecmaFeatures: {
       globalReturn: true,
       jsx: true
@@ -288,7 +289,7 @@ module.exports = {
     // import
     'import/no-unresolved': [ // 确保导入的模块可以解析为本地文件系统上的模块
       'error',
-      { commonjs: true, ignore: ['raw-loader!'] }
+      { commonjs: true }
     ]
   }
 };
