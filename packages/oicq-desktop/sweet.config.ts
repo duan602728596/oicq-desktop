@@ -83,7 +83,7 @@ export default function(info: object): { [key: string]: any } {
       exclude: /node_modules/
     },
     rules: [{
-      resourceQuery: /qqapi\.wk/,
+      test: /qqapi\.wk/,
       type: 'asset/source'
     }],
     sass: {
