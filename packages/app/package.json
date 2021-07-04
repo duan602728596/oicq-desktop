@@ -5,9 +5,9 @@
   "license": "MPL-2.0",
   "main": "bin/lib/main.js",
   "dependencies": {
-    "@electron/remote": "^1.1.0",
-    "@sweet-milktea/utils": "^3.0.0",
+    "@electron/remote": "^1.2.0",
+    "@sweet-milktea/utils": "^3.0.2",
     "oicq": "^1.17.3",
-    "puppeteer-core": "^10.0.0"
+    "puppeteer-core": "^10.1.0"
   }
 }
