@@ -6,7 +6,7 @@ import { isFileExists } from '@sweet-milktea/utils';
 import { useState, useEffect, ReactElement, Dispatch as D, SetStateAction as S, MouseEvent } from 'react';
 import * as PropTypes from 'prop-types';
 import { Modal } from 'antd';
-import qqapi from 'raw-loader!./qqapi.wk.js';
+import qqapi from './qqapi.wk.js?raw';
 import type { LoginFormValue } from '../../types';
 import type { SystemOptions } from '../../../../types';
 

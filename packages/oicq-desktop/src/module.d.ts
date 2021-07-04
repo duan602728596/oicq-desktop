@@ -65,7 +65,7 @@ declare module 'worker-loader!*' {
   export default WorkerLoader;
 }
 
-declare module 'raw-loader!*' {
+declare module '*?raw' {
   const data: string;
 
   export default data;
