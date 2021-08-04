@@ -12,12 +12,12 @@
   },
   "main": "./dist/index.js",
   "dependencies": {
-    "@koa/router": "^10.0.0",
+    "@koa/router": "^10.1.0",
     "@sweet-milktea/utils": "^3.0.2",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "lodash": "^4.17.21",
-    "ws": "^7.5.2"
+    "ws": "^7.5.3"
   },
   "devDependencies": {
     "@types/koa": "^2",
@@ -30,7 +30,7 @@
     "gulp-changed": "^4.0.3",
     "gulp-plumber": "^1.2.1",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "oicq": "^1.17.3",
+    "oicq": "^1.18.3",
     "rimraf": "^3.0.2",
     "serve": "^12.0.0"
   }
