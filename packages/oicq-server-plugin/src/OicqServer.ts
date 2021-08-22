@@ -29,7 +29,7 @@ class OicqServer {
   public router: Router;
   public wsServer: ws.Server;
   public httpServer: Server;
-  public sockets: Array<ws> = [];
+  public sockets: Set<ws> = new Set();
   public bot: Client;
 
   constructor(oicqServerArgs: OicqServerArgs) {
@@ -55,18 +55,14 @@ class OicqServer {
   }
 
   /* websocket的connection事件 */
-  handleWsServerConnection(connection: ws): void {
+  handleWsServerConnection(client: ws): void {
     // 断开连接
-    connection.on('close', (): void => {
-      const index: number = _.findIndex(this.sockets, connection);
-
-      if (index >= 0) {
-        this.sockets[index].terminate();
-        this.sockets.splice(index, 1);
-      }
+    client.on('close', (): void => {
+      client.terminate();
+      this.sockets.delete(client);
     });
 
-    this.sockets.push(connection);
+    this.sockets.add(client);
   }
 
   /* oicq监听的事件 */
