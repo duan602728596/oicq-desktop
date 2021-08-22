@@ -154,6 +154,7 @@ class OicqServer {
   /* 关闭连接 */
   destroy(): void {
     this.wsServer.close();
+    this.wsServer.clients.forEach((client: ws): void => client.terminate());
     this.httpServer.close();
   }
 }
