@@ -27,7 +27,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.15.0",
     "@sweet-milktea/milktea-cli": "^3.1.1",
-    "@sweet-milktea/util-tools": "^3.1.0",
+    "@sweet-milktea/util-tools": "^3.1.1",
     "@types/fs-extra": "^9",
     "@types/lodash-es": "^4",
     "@types/node": "^16",
@@ -56,7 +56,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "cz-conventional-changelog"
     }
   }
 }
